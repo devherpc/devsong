@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dev Playlist</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #0e0e0e;
+      color: #fff;
+      text-align: center;
+    }
+
+    header {
+      background: linear-gradient(to right, #1db954, #0f0);
+      padding: 25px 0;
+      font-size: 2.2em;
+      font-weight: bold;
+      box-shadow: 0 2px 10px #0008;
+    }
+
+    .playlist-container {
+      margin: 30px auto;
+      max-width: 90%;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 0 25px #1db95450;
+    }
+
+    iframe {
+      width: 100%;
+      height: 420px;
+      border: none;
+    }
+
+    .rating {
+      margin: 40px 0;
+    }
+
+    .stars input {
+      display: none;
+    }
+
+    .stars label {
+      font-size: 2.5em;
+      color: #444;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .stars input:checked ~ label,
+    .stars label:hover,
+    .stars label:hover ~ label {
+      color: #1db954;
+    }
+
+    #thankyou {
+      margin-top: 15px;
+      font-size: 1.2em;
+      color: #1db954;
+      font-weight: bold;
+    }
+
+    footer {
+      margin-top: 50px;
+      padding: 20px;
+      background: #111;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+
+    a {
+      color: #1db954;
+      text-decoration: none;
+    }
+
+    @media(max-width: 600px) {
+      header {
+        font-size: 1.5em;
+      }
+
+      .stars label {
+        font-size: 2em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>Dev Playlist</header>
+
+  <div class="playlist-container">
+    <iframe style="border-radius:12px"
+      src="https://open.spotify.com/embed/playlist/10KB359E9MOlpC2smHTh8B?utm_source=generator"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy">
+    </iframe>
+  </div>
+
+  <div class="rating">
+    <h2>Rate This Playlist</h2>
+    <div class="stars" id="stars">
+      <input type="radio" id="star5" name="rate" value="5"><label for="star5">&#9733;</label>
+      <input type="radio" id="star4" name="rate" value="4"><label for="star4">&#9733;</label>
+      <input type="radio" id="star3" name="rate" value="3"><label for="star3">&#9733;</label>
+      <input type="radio" id="star2" name="rate" value="2"><label for="star2">&#9733;</label>
+      <input type="radio" id="star1" name="rate" value="1"><label for="star1">&#9733;</label>
+    </div>
+    <div id="thankyou"></div>
+  </div>
+
+  <footer>
+    Created by Dev | Listen on <a href="https://open.spotify.com/playlist/10KB359E9MOlpC2smHTh8B" target="_blank">Spotify</a>
+  </footer>
+
+  <script>
+    const rated = localStorage.getItem("ratedDevPlaylist");
+    const stars = document.querySelectorAll('input[name="rate"]');
+    const thankyou = document.getElementById("thankyou");
+
+    if (rated) {
+      document.getElementById("stars").style.pointerEvents = "none";
+      thankyou.innerText = "You already rated this playlist!";
+    }
+
+    stars.forEach(star => {
+      star.addEventListener("change", () => {
+        if (!localStorage.getItem("ratedDevPlaylist")) {
+          localStorage.setItem("ratedDevPlaylist", "true");
+          thankyou.innerText = "Thanks for rating!";
+          document.getElementById("stars").style.pointerEvents = "none";
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
